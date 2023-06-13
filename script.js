@@ -38,23 +38,24 @@ $(function () {
     }
   });
 
-    // Get and set user input from localStorage
-    $(".time-block").each(function() {
-      var time = $(this).attr("id");
-      var savedTask = getSavedTask(time);
-      $(this).find("textarea").val(savedTask);
+  // Get and set user input from localStorage
+  $(".time-block").each(function () {
+    var time = $(this).attr("id");
+    var savedTask = getSavedTask(time);
+    $(this).find("textarea").val(savedTask);
+  });
+
+  function getSavedTask(time) {
+    var rawData = localStorage.getItem("tasks");
+    var parsed = JSON.parse(rawData) || [];
+    var task = parsed.find(function (item) {
+      return item.time === time;
     });
-  
-    function getSavedTask(time) {
-      var rawData = localStorage.getItem("tasks");
-      var parsed = JSON.parse(rawData) || [];
-      var task = parsed.find(function(item) {
-        return item.time === time;
-      });
-      if (task) {
-        return task.task
-      } else {
-        return ""
-      }
+    if (task) {
+      return task.task;
+    } else {
+      return "";
     }
+  }
+  $("#currentDay").text(dayjs().format("MMMM D, YYYY"));
 });
