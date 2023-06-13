@@ -1,6 +1,6 @@
-$(function() {
+$(function () {
   // Add a listener for click events on the save button
-  $("button").on("click", function() {
+  $("button").on("click", function () {
     var item = {
       time: $(this).parent().attr("id"),
       task: $(this).prev().val(),
@@ -26,4 +26,15 @@ $(function() {
     return parsed;
   }
 
-})
+  // Apply the past, present, or future class to each time block
+  $(".time-block").each(function () {
+    var hour = $(this).attr("id").split("-")[1];
+    if (hour < dayjs().hour()) {
+      $(this).addClass("past");
+    } else if (hour > dayjs().hour()) {
+      $(this).addClass("future");
+    } else {
+      $(this).addClass("present");
+    }
+  });
+});
